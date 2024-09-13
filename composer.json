@@ -1,0 +1,23 @@
+{
+    "name": "hexlet/code",
+    "description": "Вычислитель отличий",
+    "license": "proprietary",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "aralts",
+            "email": "aralts@yandex.ru"
+        }
+    ],
+    "bin": [
+        "bin/gendiff"
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
