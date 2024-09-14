@@ -11,6 +11,8 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
+require __DIR__ . '/../src/file_parser.php';
+
 $doc = <<<DOC
 gendiff -h
 
@@ -33,6 +35,16 @@ $firstFile = $args['<firstFile>'];
 $secondFile = $args['<secondFile>'];
 $format = $args['--format'];
 
-echo "First file: $firstFile\n";
-echo "Second file: $secondFile\n";
-echo "Format: $format\n";
+try {
+  $firstData = parseFile($firstFile);
+  $secondData = parseFile($secondFile);
+} catch (Exception $e) {
+  echo $e->getMessage() . "\n";
+  exit(1);
+}
+
+echo "First file data:\n";
+print_r($firstData);
+
+echo "Second file data:\n";
+print_r($secondData);
