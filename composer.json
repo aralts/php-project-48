@@ -5,8 +5,11 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        }
+            "Differ\\": "src/"
+        },
+        "files": [
+            "src/Differ.php"
+        ]
     },
     "authors": [
         {

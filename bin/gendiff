@@ -11,7 +11,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-require __DIR__ . '/../src/file_parser.php';
+use function Differ\genDiff;
 
 $doc = <<<DOC
 gendiff -h
@@ -33,18 +33,8 @@ $args = Docopt::handle($doc, ['version' => 'gendiff 1.0']);
 
 $firstFile = $args['<firstFile>'];
 $secondFile = $args['<secondFile>'];
-$format = $args['--format'];
+$format = $args['--format'] ?? 'stylish';
 
-try {
-  $firstData = parseFile($firstFile);
-  $secondData = parseFile($secondFile);
-} catch (Exception $e) {
-  echo $e->getMessage() . "\n";
-  exit(1);
-}
+$diff = genDiff($firstFile, $secondFile, $format);
 
-echo "First file data:\n";
-print_r($firstData);
-
-echo "Second file data:\n";
-print_r($secondData);
+echo $diff . "\n";
