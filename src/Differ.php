@@ -65,11 +65,13 @@ function formatStylish(array $data1, array $data2, int $indentSize = 2, int $bas
     return "{\n" . implode("\n", $diff) . "\n}";
 }
 
-function formatLine(string $key, $value, string $sign, int $indentLevel, int $indentSize): string {
+function formatLine(string $key, $value, string $sign, int $indentLevel, int $indentSize): string
+{
     $indent = addIndent($indentLevel, $indentSize);
     return "{$indent}{$sign} $key: " . var_export($value, true);
 }
 
-function addIndent(int $depth, int $indentSize = 2): string {
+function addIndent(int $depth, int $indentSize = 2): string
+{
     return str_repeat(' ', $depth * $indentSize);
 }
