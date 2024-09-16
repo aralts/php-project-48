@@ -6,9 +6,22 @@ use function Differ\genDiff;
 
 class GenDiffTest extends TestCase
 {
+    /**
+     * @covers \Differ\genDiff
+     */
     public function testGenDiff(): void
     {
-        $expected = "{\n    - follow: false\n    host: 'hexlet.io'\n    - proxy: '123.234.53.22'\n    - timeout: 50\n    + timeout: 20\n    + verbose: true\n}";
+        $expected = <<<EOL
+        {
+          - follow: false
+            host: 'hexlet.io'
+          - proxy: '123.234.53.22'
+          - timeout: 50
+          + timeout: 20
+          + verbose: true
+        }
+        EOL;
+
         $actual = genDiff('tests/fixtures/file1.json', 'tests/fixtures/file2.json');
         $this->assertEquals($expected, $actual);
     }
