@@ -8,6 +8,10 @@ class GenDiffTest extends TestCase
 {
     /**
      * @covers \Differ\genDiff
+     * @covers \Differ\parseFile
+     * @covers \Differ\formatStylish
+     * @covers \Differ\addIndent
+     * @covers \Differ\formatLine
      */
     public function testGenDiff(): void
     {
