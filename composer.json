@@ -11,6 +11,14 @@
             "src/Differ.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Differ\\": "tests/"
+        },
+        "files": [
+            "tests/GenDiffTest.php"
+        ]
+    },
     "authors": [
         {
             "name": "aralts",
