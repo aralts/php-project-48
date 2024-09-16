@@ -1,0 +1,23 @@
+version: "2"
+checks:
+  php_code_sniffer:
+    enabled: true
+    config:
+      standard: "PSR12"
+  duplication:
+    enabled: true
+
+ratings:
+  paths:
+    - "src"
+
+exclude_paths:
+  - "tests"
+  - "vendor"
+
+plugins:
+  php-test-reporter:
+    enabled: true
+    config:
+      coverage:
+        path: "tests/logs/clover.xml"

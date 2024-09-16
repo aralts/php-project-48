@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: xdebug
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run lint
+        run: make lint
+
+      - name: Run tests
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+        
+      - name: Upload coverage to CodeClimate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+          ./cc-test-reporter after-build --exit-code $?
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
