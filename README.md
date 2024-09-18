@@ -9,3 +9,6 @@
 
 ### Сравнение плоских файлов (JSON)
 [![asciinema](https://img.shields.io/badge/asciinema%20(lesson%204)-E6695B)](https://asciinema.org/a/sL3eFK3jELaVYOvESMCwqpbly)
+
+### Сравнение плоских файлов (YAML)
+[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%206)-E6695B)](https://asciinema.org/a/WKSTd5fRsslxOjwHmwbznPItH)

@@ -2,29 +2,13 @@
 
 namespace Differ;
 
-function parseFile(string $filePath): array
-{
-    $realPath = realpath($filePath);
-
-    if ($realPath === false) {
-        throw new \Exception("Error: File '$filePath' does not exist.");
-    }
-
-    $fileContent = file_get_contents($realPath);
-    $data = json_decode($fileContent, true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new \Exception("Error: Failed to parse JSON from '$realPath'.");
-    }
-
-    return $data;
-}
+use function Differ\Parsers\parse;
 
 function genDiff(string $file1, string $file2, string $format = 'stylish'): string
 {
     try {
-        $data1 = parseFile($file1);
-        $data2 = parseFile($file2);
+        $data1 = parse($file1);
+        $data2 = parse($file2);
     } catch (\Exception $e) {
         return $e->getMessage();
     }
