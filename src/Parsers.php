@@ -30,7 +30,7 @@ function parse(string $filePath): array
         default:
             throw new \Exception("Error: Unsupported file format '$extension'.");
     }
-    
+
     return $data;
 }
 

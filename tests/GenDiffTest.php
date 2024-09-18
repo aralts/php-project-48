@@ -9,7 +9,7 @@ class GenDiffTest extends TestCase
 {
 	/**
 	 * @covers \Differ\genDiff
-	 * @covers \Differ\parseFile
+	 * @covers \Differ\Parsers\parse
 	 * @covers \Differ\formatStylish
 	 * @covers \Differ\addIndent
 	 * @covers \Differ\formatLine
@@ -31,6 +31,14 @@ class GenDiffTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+  /**
+	 * @covers \Differ\genDiff
+	 * @covers \Differ\Parsers\parse
+	 * @covers \Differ\Parsers\objectToArray
+	 * @covers \Differ\formatStylish
+	 * @covers \Differ\addIndent
+	 * @covers \Differ\formatLine
+	 */
 	public function testYamlDiff()
 	{
 		$expected = <<<EOL
@@ -44,6 +52,6 @@ class GenDiffTest extends TestCase
         }
         EOL;
 
-		$this->assertEquals($expected, genDiff('file1.yaml', 'file2.yaml'));
+		$this->assertEquals($expected, genDiff('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yaml'));
 	}
 }
