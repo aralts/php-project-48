@@ -12,3 +12,6 @@
 
 ### Сравнение плоских файлов (YAML)
 [![asciinema](https://img.shields.io/badge/asciinema%20(lesson%206)-E6695B)](https://asciinema.org/a/WKSTd5fRsslxOjwHmwbznPItH)
+
+### Сравнение вложенных файлов
+[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%206)-E6695B)](https://asciinema.org/a/zZu5jL7UqjrnTIkm0gMW9NRc2)

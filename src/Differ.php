@@ -3,6 +3,7 @@
 namespace Differ;
 
 use function Differ\Parsers\parse;
+use function Differ\Formatters\Stylish\format as formatStylish;
 
 function genDiff(string $file1, string $file2, string $format = 'stylish'): string
 {
@@ -13,49 +14,41 @@ function genDiff(string $file1, string $file2, string $format = 'stylish'): stri
         return $e->getMessage();
     }
 
+    $diff = buildDiff($data1, $data2);
+
     switch ($format) {
         case 'stylish':
-            return formatStylish($data1, $data2);
+            return formatStylish($diff);
         default:
             throw new \Exception("Error: Unknown format '$format'. Supported formats: stylish.");
     }
 }
 
-function formatStylish(array $data1, array $data2, int $indentSize = 2, int $baseIndentLevel = 1): string
+function buildDiff(array $data1, array $data2): array
 {
     $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
     sort($allKeys);
 
-    $diff = array_map(function ($key) use ($data1, $data2, $indentSize, $baseIndentLevel) {
+    return array_map(function ($key) use ($data1, $data2) {
         $existsInFile1 = array_key_exists($key, $data1);
         $existsInFile2 = array_key_exists($key, $data2);
 
         if ($existsInFile1 && !$existsInFile2) {
-            return formatLine($key, $data1[$key], '-', $baseIndentLevel, $indentSize);
+            return ['key' => $key, 'type' => 'removed', 'value' => $data1[$key]];
         }
 
         if (!$existsInFile1 && $existsInFile2) {
-            return formatLine($key, $data2[$key], '+', $baseIndentLevel, $indentSize);
+            return ['key' => $key, 'type' => 'added', 'value' => $data2[$key]];
+        }
+
+        if (is_array($data1[$key]) && is_array($data2[$key])) {
+            return ['key' => $key, 'type' => 'nested', 'children' => buildDiff($data1[$key], $data2[$key])];
         }
 
         if ($data1[$key] !== $data2[$key]) {
-            return formatLine($key, $data1[$key], '-', $baseIndentLevel, $indentSize) . "\n" .
-                   formatLine($key, $data2[$key], '+', $baseIndentLevel, $indentSize);
+            return ['key' => $key, 'type' => 'changed', 'oldValue' => $data1[$key], 'newValue' => $data2[$key]];
         }
 
-        return formatLine($key, $data1[$key], ' ', $baseIndentLevel, $indentSize);
+        return ['key' => $key, 'type' => 'unchanged', 'value' => $data1[$key]];
     }, $allKeys);
-
-    return "{\n" . implode("\n", $diff) . "\n}";
-}
-
-function formatLine(string $key, $value, string $sign, int $indentLevel, int $indentSize): string
-{
-    $indent = addIndent($indentLevel, $indentSize);
-    return "{$indent}{$sign} $key: " . var_export($value, true);
-}
-
-function addIndent(int $depth, int $indentSize = 2): string
-{
-    return str_repeat(' ', $depth * $indentSize);
 }

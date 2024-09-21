@@ -9,16 +9,14 @@
         },
         "files": [
             "src/Differ.php",
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Formatters/Stylish.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Differ\\": "tests/"
-        },
-        "files": [
-            "tests/GenDiffTest.php"
-        ]
+            "Differ\\Tests\\": "tests/"
+        }
     },
     "authors": [
         {
