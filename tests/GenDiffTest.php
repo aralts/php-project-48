@@ -7,11 +7,12 @@ use function Differ\genDiff;
 
 class GenDiffTest extends TestCase
 {
-    private string $expectedOutput;
+    private string $expectedStylishOutput;
+    private string $expectedPlainOutput;
 
     protected function setUp(): void
     {
-        $this->expectedOutput = '{
+        $this->expectedStylishOutput = '{
     common: {
       + follow: false
         setting1: Value 1
@@ -55,6 +56,17 @@ class GenDiffTest extends TestCase
         fee: 100500
     }
 }';
+        $this->expectedPlainOutput = "Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]";
     }
 
 	/**
@@ -65,7 +77,8 @@ class GenDiffTest extends TestCase
         $file1 = 'tests/fixtures/nestedFile1.json';
         $file2 = 'tests/fixtures/nestedFile2.json';
 
-        $this->assertSame($this->expectedOutput, genDiff($file1, $file2));
+        $this->assertSame($this->expectedStylishOutput, genDiff($file1, $file2));
+        $this->assertSame($this->expectedPlainOutput, genDiff($file1, $file2, 'plain'));
     }
 
 	/**
@@ -76,6 +89,7 @@ class GenDiffTest extends TestCase
         $file1 = 'tests/fixtures/nestedFile1.yaml';
         $file2 = 'tests/fixtures/nestedFile2.yaml';
 
-        $this->assertSame($this->expectedOutput, genDiff($file1, $file2));
+        $this->assertSame($this->expectedStylishOutput, genDiff($file1, $file2));
+        $this->assertSame($this->expectedPlainOutput, genDiff($file1, $file2, 'plain'));
     }
 }

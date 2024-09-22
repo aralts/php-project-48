@@ -3,7 +3,7 @@
 namespace Differ;
 
 use function Differ\Parsers\parse;
-use function Differ\Formatters\Stylish\format as formatStylish;
+use function Differ\Formatters\format;
 
 function genDiff(string $file1, string $file2, string $format = 'stylish'): string
 {
@@ -16,12 +16,7 @@ function genDiff(string $file1, string $file2, string $format = 'stylish'): stri
 
     $diff = buildDiff($data1, $data2);
 
-    switch ($format) {
-        case 'stylish':
-            return formatStylish($diff);
-        default:
-            throw new \Exception("Error: Unknown format '$format'. Supported formats: stylish.");
-    }
+    return format($diff, $format);
 }
 
 function buildDiff(array $data1, array $data2): array
