@@ -14,4 +14,7 @@
 [![asciinema](https://img.shields.io/badge/asciinema%20(lesson%206)-E6695B)](https://asciinema.org/a/WKSTd5fRsslxOjwHmwbznPItH)
 
 ### Сравнение вложенных файлов
-[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%206)-E6695B)](https://asciinema.org/a/zZu5jL7UqjrnTIkm0gMW9NRc2)
+[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%207)-E6695B)](https://asciinema.org/a/zZu5jL7UqjrnTIkm0gMW9NRc2)
+
+### Вывод в формате plain
+[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%208)-E6695B)](https://asciinema.org/a/zZu5jL7UqjrnTIkm0gMW9NRc2)
