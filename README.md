@@ -18,3 +18,6 @@
 
 ### Вывод в формате plain
 [![asciinema](https://img.shields.io/badge/asciinema%20(lesson%208)-E6695B)](https://asciinema.org/a/zZu5jL7UqjrnTIkm0gMW9NRc2)
+
+### Вывод в формате json
+[![asciinema](https://img.shields.io/badge/asciinema%20(lesson%209)-E6695B)](https://asciinema.org/a/etF6AVNEA8UPKMkC54amxcHVF)
