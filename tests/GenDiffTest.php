@@ -3,6 +3,7 @@
 namespace Differ\Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\genDiff;
 
 class GenDiffTest extends TestCase
@@ -69,9 +70,9 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]";
     }
 
-	/**
-	 * @coversNothing
-	 */
+	  /**
+	  * @coversNothing
+	  */
     public function testNestedJsonFiles(): void
     {
         $file1 = 'tests/fixtures/nestedFile1.json';
@@ -81,9 +82,9 @@ Property 'group3' was added with value: [complex value]";
         $this->assertSame($this->expectedPlainOutput, genDiff($file1, $file2, 'plain'));
     }
 
-	/**
-	 * @coversNothing
-	 */
+	  /**
+	  * @coversNothing
+	  */
     public function testNestedYamlFiles(): void
     {
         $file1 = 'tests/fixtures/nestedFile1.yaml';
