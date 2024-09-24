@@ -5,10 +5,10 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Differ\Differ\\": "src/"
+            "Differ\\Differ\\": "src/"
         },
         "files": [
-            "src/Differ\Differ.php",
+            "src/Differ.php",
             "src/Parsers.php",
             "src/Formatters.php",
             "src/Formatters/Stylish.php",
@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Differ\Differ\\Tests\\": "tests/"
+            "Differ\\Differ\\Tests\\": "tests/"
         }
     },
     "authors": [
