@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Formatters\Stylish;
+namespace Differ\Differ\Formatters\Stylish;
 
 function format(array $diff, int $indentSize = 4, int $currentDepth = 1): string
 {
