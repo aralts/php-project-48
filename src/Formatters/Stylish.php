@@ -63,17 +63,24 @@ function formatNestedString(string $indent, string $key, string $children): stri
 function formatValue(mixed $value, int $indentSize, int $currentDepth): string
 {
     if (is_array($value)) {
-        $formatted = [];
-        foreach ($value as $key => $val) {
-            $formatted[] = formatLine($key, $val, $indentSize, $currentDepth);
-        }
-
+        $keys = array_keys($value);
+        $formatted = formatArray($value, $keys, $indentSize, $currentDepth);
         return "{\n" . implode("\n", $formatted) . "\n" . str_repeat(' ', $indentSize * ($currentDepth - 1)) . "}";
     }
 
     return is_string($value) ? "$value" : strtolower(var_export($value, true));
 }
 
+function formatArray(array $array, array $keys, int $indentSize, int $currentDepth): array
+{
+    if (count($keys) === 0) {
+        return [];
+    }
+
+    $key = $keys[0];
+    $formattedLine = formatLine($key, $array[$key], $indentSize, $currentDepth);
+    return array_merge([$formattedLine], formatArray($array, array_slice($keys, 1), $indentSize, $currentDepth));
+}
 
 function formatLine(string|int $key, mixed $val, int $indentSize, int $currentDepth): string
 {

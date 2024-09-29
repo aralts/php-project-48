@@ -16,36 +16,43 @@ function parse(string $filePath): array
     if ($fileContent === false) {
         throw new \Exception("Error: Could not read the file '$realPath'.");
     }
+    
     $extension = pathinfo($realPath, PATHINFO_EXTENSION);
 
-    switch ($extension) {
-        case 'json':
-            $data = json_decode($fileContent, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception("Error: Failed to parse JSON from '$realPath'.");
-            }
-            break;
-        case 'yml':
-        case 'yaml':
-            $data = Yaml::parse($fileContent, Yaml::PARSE_OBJECT_FOR_MAP);
-            $data = objectToArray($data);
-            break;
-        default:
-            throw new \Exception("Error: Unsupported file format '$extension'.");
+    return match ($extension) {
+        'json' => parseJson($fileContent, $realPath),
+        'yml', 'yaml' => objectToArray(Yaml::parse($fileContent, Yaml::PARSE_OBJECT_FOR_MAP)),
+        default => throw new \Exception("Error: Unsupported file format '$extension'.")
+    };
+}
+
+
+function parseJson(string $content, string $path): array
+{
+    $data = json_decode($content, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new \Exception("Error: Failed to parse JSON from '$path'.");
     }
 
     return $data;
 }
 
-
 function objectToArray(object $object): array
 {
     $array = (array) $object;
-    $result = [];
+    return transformArray($array);
+}
 
-    foreach ($array as $key => $value) {
-        $result[$key] = is_object($value) ? objectToArray($value) : $value;
+function transformArray(array $array): array
+{
+    if (count($array) === 0) {
+        return [];
     }
 
-    return $result;
+    $key = array_key_first($array);
+    $value = $array[$key];
+    $rest = array_slice($array, 1, null, true);
+
+    $transformedValue = is_object($value) ? objectToArray($value) : $value;
+    return [$key => $transformedValue] + transformArray($rest);
 }
