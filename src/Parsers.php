@@ -34,7 +34,7 @@ function parse(string $filePath): array
     return $data;
 }
 
-function objectToArray($object): array
+function objectToArray(object $object): array
 {
-    return json_decode(json_encode($object), true);
+    return array_map(fn(mixed $value) => (is_object($value) ? objectToArray($value) : $value), (array) $object);
 }

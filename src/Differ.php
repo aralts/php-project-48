@@ -21,8 +21,9 @@ function genDiff(string $file1, string $file2, string $format = 'stylish'): stri
 
 function buildDiff(array $data1, array $data2): array
 {
-    $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
-    sort($allKeys);
+    $allKeys = array_values(array_unique(array_merge(array_keys($data1), array_keys($data2))));
+    $sortedKeys = array_merge([], $allKeys);
+    usort($sortedKeys, fn($a, $b) => $a <=> $b);
 
     return array_map(function ($key) use ($data1, $data2) {
         $existsInFile1 = array_key_exists($key, $data1);

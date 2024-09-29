@@ -11,14 +11,14 @@ function formatItems(array $diff, int $indentSize, int $currentDepth): string
 {
     $indent = str_repeat(' ', $indentSize * $currentDepth - 2);
 
-    $formatted = array_map(function ($item) use ($indent, $currentDepth, $indentSize) {
+    $formatted = array_map(function (array $item) use ($indent, $currentDepth, $indentSize): string {
         return formatItem($item, $indent, $currentDepth, $indentSize);
     }, $diff);
 
     return implode("\n", $formatted);
 }
 
-function formatItem($item, $indent, $currentDepth, $indentSize)
+function formatItem(array $item, string $indent, int $currentDepth, int $indentSize): string
 {
     $key = $item['key'];
     $type = $item['type'];
@@ -43,7 +43,7 @@ function formatItem($item, $indent, $currentDepth, $indentSize)
     }
 }
 
-function formatString($indent, $key, $value, $type)
+function formatString(string $indent, string $key, string $value, string $type): string
 {
     $prefix = match ($type) {
         'added' => '+ ',
@@ -55,15 +55,15 @@ function formatString($indent, $key, $value, $type)
     return "{$indent}{$prefix}{$key}: {$value}";
 }
 
-function formatNestedString($indent, $key, $children)
+function formatNestedString(string $indent, string $key, string $children): string
 {
     return "{$indent}  {$key}: {\n{$children}\n{$indent}  }";
 }
 
-function formatValue($value, int $indentSize, int $currentDepth): string
+function formatValue(mixed $value, int $indentSize, int $currentDepth): string
 {
     if (is_array($value)) {
-        $formatted = array_map(function ($key, $val) use ($indentSize, $currentDepth) {
+        $formatted = array_map(function (string|int $key, mixed $val) use ($indentSize, $currentDepth): string {
             return formatLine($key, $val, $indentSize, $currentDepth);
         }, array_keys($value), $value);
 
@@ -73,7 +73,7 @@ function formatValue($value, int $indentSize, int $currentDepth): string
     return is_string($value) ? "$value" : strtolower(var_export($value, true));
 }
 
-function formatLine($key, $val, $indentSize, $currentDepth)
+function formatLine(string|int $key, mixed $val, int $indentSize, int $currentDepth): string
 {
     $innerIndent = str_repeat(' ', $indentSize * $currentDepth);
     return "{$innerIndent}{$key}: " . formatValue($val, $indentSize, $currentDepth + 1);

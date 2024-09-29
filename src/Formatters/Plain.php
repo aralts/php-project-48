@@ -34,7 +34,7 @@ function formatItem(array $item, string $path): string
     }
 }
 
-function formatValue($value): string
+function formatValue(mixed $value): string
 {
     if (is_array($value)) {
         return '[complex value]';
