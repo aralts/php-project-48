@@ -22,7 +22,6 @@ function formatItem(array $item, string $indent, int $currentDepth, int $indentS
 {
     $key = $item['key'];
     $type = $item['type'];
-    $value = '';
 
     switch ($type) {
         case 'added':
