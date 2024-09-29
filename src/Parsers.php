@@ -16,7 +16,7 @@ function parse(string $filePath): array
     if ($fileContent === false) {
         throw new \Exception("Error: Could not read the file '$realPath'.");
     }
-    
+
     $extension = pathinfo($realPath, PATHINFO_EXTENSION);
 
     return match ($extension) {
