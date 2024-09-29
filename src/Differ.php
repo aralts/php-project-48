@@ -50,16 +50,30 @@ function buildDiff(array $data1, array $data2): array
 
 function keysSort(array $array): array
 {
-    $n = count($array);
-    $sortedArray = $array;
-
-    for ($i = 0; $i < $n; $i++) {
-        for ($j = 0; $j < $n - $i - 1; $j++) {
-            if ($sortedArray[$j] > $sortedArray[$j + 1]) {
-                [$sortedArray[$j], $sortedArray[$j + 1]] = [$sortedArray[$j + 1], $sortedArray[$j]];
-            }
-        }
+    if (count($array) <= 1) {
+        return $array;
     }
 
-    return $sortedArray;
+    $middle = intdiv(count($array), 2);
+    $left = array_slice($array, 0, $middle);
+    $right = array_slice($array, $middle);
+
+    return merge(keysSort($left), keysSort($right));
+}
+
+function merge(array $left, array $right): array
+{
+    if (empty($left)) {
+        return $right;
+    }
+
+    if (empty($right)) {
+        return $left;
+    }
+
+    if ($left[0] <= $right[0]) {
+        return array_merge([$left[0]], merge(array_slice($left, 1), $right));
+    }
+
+    return array_merge([$right[0]], merge($left, array_slice($right, 1)));
 }
