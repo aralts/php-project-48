@@ -13,6 +13,9 @@ function parse(string $filePath): array
     }
 
     $fileContent = file_get_contents($realPath);
+    if ($fileContent === false) {
+        throw new \Exception("Error: Could not read the file '$realPath'.");
+    }
     $extension = pathinfo($realPath, PATHINFO_EXTENSION);
 
     switch ($extension) {
@@ -33,6 +36,7 @@ function parse(string $filePath): array
 
     return $data;
 }
+
 
 function objectToArray(object $object): array
 {
