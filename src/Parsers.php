@@ -40,6 +40,12 @@ function parse(string $filePath): array
 
 function objectToArray(object $object): array
 {
-    $objectCopy = $object;
-    return array_map(fn(mixed $value) => (is_object($value) ? objectToArray($value) : $value), (array) $objectCopy);
+    $array = (array) $object;
+    $result = [];
+
+    foreach ($array as $key => $value) {
+        $result[$key] = is_object($value) ? objectToArray($value) : $value;
+    }
+
+    return $result;
 }

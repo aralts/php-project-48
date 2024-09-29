@@ -58,22 +58,22 @@ function keysSort(array $array): array
     $left = array_slice($array, 0, $middle);
     $right = array_slice($array, $middle);
 
-    return merge(keysSort($left), keysSort($right));
+    return sortMerge(keysSort($left), keysSort($right));
 }
 
-function merge(array $left, array $right): array
+function sortMerge(array $left, array $right): array
 {
-    if (empty($left)) {
+    if ($left === []) {
         return $right;
     }
 
-    if (empty($right)) {
+    if ($right === []) {
         return $left;
     }
 
     if ($left[0] <= $right[0]) {
-        return array_merge([$left[0]], merge(array_slice($left, 1), $right));
+        return array_merge([$left[0]], sortMerge(array_slice($left, 1), $right));
     }
 
-    return array_merge([$right[0]], merge($left, array_slice($right, 1)));
+    return array_merge([$right[0]], sortMerge($left, array_slice($right, 1)));
 }
